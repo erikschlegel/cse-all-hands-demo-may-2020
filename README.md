@@ -12,25 +12,20 @@ The [Terraform provider for Azure DevOps](https://github.com/microsoft/terraform
 
 ### Resources Provisioned
 
-**Azure DevOps** (`azdo.tf`)
-- Project
-- Variable Groups
-  - `Vars - Common`
-  - `Vars - $STAGE`
-  - `Secrets - $STAGE`
-- Git Repository
-- Build Definition (pipeline)
-- Service Connection
-- Service Connection Authorization
+| Resource | Description | Backend | File |
+| ---      | ---         | ---     | ---  |
+| Project | A project that holds all other resources provisioned in AzDO | Azure DevOps | `tf-code/azdo.tf` |
+| `Vars - Common` | A variable group used in all deployment stages | Azure DevOps | `tf-code/azdo.tf` |
+| `Vars - $STAGE` | A variable group used in a specific stage. Default stages are `dev`, `qa` and `prod` | Azure DevOps | `tf-code/azdo.tf` |
+| `Secrets - $STAGE` | Like `Vars - $STAGE`, but these are secrets | Azure DevOps | `tf-code/azdo.tf` |
+| Git Repository | A repository | Azure DevOps | `tf-code/azdo.tf` |
+| Build Definition | A build/release pipeline | Azure DevOps | `tf-code/azdo.tf` |
+| Service Connection | Enables authentication with azure | Azure DevOps | `tf-code/azdo.tf` |
+| Service Connection Authorization | Authorizes pipeline to use a Service Connection | Azure DevOps | `tf-code/azdo.tf` |
+| AAD Application | Needed to provision service principal | Azure Active Directory | `tf-code/azure.tf` |
+| Service Principal | Used by pipeline | Azure Active Directory | `tf-code/azure.tf` |
+| Role Assignment | Grants permissions to Service Principal | AzureRM | `tf-code/azure.tf` |
 
-**Azure Active Directory** (`azure.tf`)
-
-- AAD Application
-- Service Principal
-
-**Azure** (`azure.tf`)
-
-- Role assignment for provisioned service principal
 
 ### Deploy Resources
 
