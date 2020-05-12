@@ -55,9 +55,9 @@ git clone $(echo $REPO_CLONE_URL | sed "s/https:\/\//https:\/\/$AZDO_PERSONAL_AC
 mkdir .tmp/
 cp pipeline-code/*.yml .tmp/
 (
-    cd .tmp/                                  && \
-    git add -A                                && \
-    git commit -m"Adding azure pipeline file" && \
+    cd .tmp/                                   && \
+    git add -A                                 && \
+    git commit -m"Adding azure pipeline files" && \
     git push
 )
 

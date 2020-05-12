@@ -26,7 +26,7 @@ resource "azuredevops_variable_group" "vars_shared" {
   }
 
   variable {
-    name = "SERVICE_CONNECTION_NAME"
+    name  = "SERVICE_CONNECTION_NAME"
     value = azuredevops_serviceendpoint_azurerm.endpointazure.service_endpoint_name
   }
 
@@ -54,8 +54,8 @@ resource "azuredevops_variable_group" "vars_stage_secret" {
   allow_access = true
 
   variable {
-    name  = "STAGE_SECRET"
-    value = format("Secret value for %s - %s", var.environments[count.index], strrev(var.environments[count.index]))
+    name      = "STAGE_SECRET"
+    value     = format("Secret value for %s - %s", var.environments[count.index], strrev(var.environments[count.index]))
     is_secret = true
   }
 
@@ -101,7 +101,7 @@ resource "azuredevops_serviceendpoint_azurerm" "endpointazure" {
 }
 
 resource "azuredevops_resource_authorization" "auth" {
-  project_id = azuredevops_project.p.id
+  project_id  = azuredevops_project.p.id
   resource_id = azuredevops_serviceendpoint_azurerm.endpointazure.id
-  authorized = true
+  authorized  = true
 }
