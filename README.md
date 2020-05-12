@@ -15,6 +15,9 @@ The [Terraform provider for Azure DevOps](https://github.com/microsoft/terraform
 | Resource | Description | Backend | File |
 | ---      | ---         | ---     | ---  |
 | Project | A project that holds all other resources provisioned in AzDO | Azure DevOps | `tf-code/azdo.tf` |
+| User | A user from AAD who is invited to the AzDO Project | Azure DevOps | `tf-code/azdo.tf` |
+| Group | A group in AzDO | Azure DevOps | `tf-code/azdo.tf` |
+| Group Memberships | Memberships for the created group | Azure DevOps | `tf-code/azdo.tf` |
 | `Vars - Common` | A variable group used in all deployment stages | Azure DevOps | `tf-code/azdo.tf` |
 | `Vars - $STAGE` | A variable group used in a specific stage. Default stages are `dev`, `qa` and `prod` | Azure DevOps | `tf-code/azdo.tf` |
 | `Secrets - $STAGE` | Like `Vars - $STAGE`, but these are secrets | Azure DevOps | `tf-code/azdo.tf` |
@@ -34,7 +37,7 @@ The [Terraform provider for Azure DevOps](https://github.com/microsoft/terraform
 terraform init tf-code/
 
 # 2. Deploy Resources
-terraform apply tf-code/
+terraform apply -auto-approve tf-code/
 ```
 
 ### Push some code

@@ -5,10 +5,44 @@ provider "azuredevops" {
   version = ">= 0.0.1"
 }
 
+##
+# Project & Group Management
+##
 resource "azuredevops_project" "p" {
   project_name = format("%s-project", var.prefix)
 }
 
+data "azuredevops_group" "readers" {
+  project_id = azuredevops_project.p.id
+  name = "Readers"
+}
+
+data "azuredevops_group" "contributors" {
+  project_id = azuredevops_project.p.id
+  name = "Contributors"
+}
+
+resource "azuredevops_user_entitlement" "user" {
+    principal_name     = var.user_to_invite
+}
+
+resource "azuredevops_group" "group" {
+  scope        = azuredevops_project.p.id
+  display_name = "Example Group"
+  description  = "Managed by Terraform"
+
+  members = [
+      azuredevops_user_entitlement.user.descriptor,
+      data.azuredevops_group.readers.descriptor,
+      data.azuredevops_group.contributors.descriptor
+  ]
+}
+
+
+
+##
+# Variables
+##
 resource "azuredevops_variable_group" "vars_shared" {
   project_id   = azuredevops_project.p.id
   name         = "Vars - Common"
@@ -61,6 +95,9 @@ resource "azuredevops_variable_group" "vars_stage_secret" {
 
 }
 
+##
+# Repository
+##
 resource "azuredevops_git_repository" "repo" {
   project_id = azuredevops_project.p.id
   name       = "App Repository"
@@ -69,6 +106,10 @@ resource "azuredevops_git_repository" "repo" {
   }
 }
 
+
+##
+# Build
+##
 resource "azuredevops_build_definition" "build" {
   project_id = azuredevops_project.p.id
   name       = "App Deployment Pipeline"
@@ -87,6 +128,10 @@ resource "azuredevops_build_definition" "build" {
     azuredevops_variable_group.vars_stage_secret.*.id
   )
 }
+
+##
+# Service Connection
+##
 
 resource "azuredevops_serviceendpoint_azurerm" "endpointazure" {
   project_id            = azuredevops_project.p.id
