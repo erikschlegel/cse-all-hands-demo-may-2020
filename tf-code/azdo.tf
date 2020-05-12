@@ -90,7 +90,7 @@ resource "azuredevops_build_definition" "build" {
 
 resource "azuredevops_serviceendpoint_azurerm" "endpointazure" {
   project_id            = azuredevops_project.p.id
-  service_endpoint_name = "Infrastructure Deployment Service Connection"
+  service_endpoint_name = "Deployment Service Connection"
   credentials {
     serviceprincipalid  = azuread_service_principal.sp.application_id
     serviceprincipalkey = random_string.random.result
