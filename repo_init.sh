@@ -1,5 +1,4 @@
 #!/bin/bash
-
 REPO_CLONE_DIR="./.tmp/"
 
 # get repo clone URL from the Terraform output
@@ -9,7 +8,7 @@ AUTHED_REPO_CLONE_URL=$(echo $REPO_CLONE_URL | sed "s/https:\/\//https:\/\/$AZDO
 echo "Cloning from $REPO_CLONE_URL using AzDO PAT"
 git clone "$AUTHED_REPO_CLONE_URL" "$REPO_CLONE_DIR"
 
-cp azure-pipeline.yml "$REPO_CLONE_DIR"
+cp *.yml "$REPO_CLONE_DIR"
 
 (
     cd "$REPO_CLONE_DIR"                      && \

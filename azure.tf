@@ -30,3 +30,9 @@ resource "azuread_service_principal_password" "passwd" {
   value                = random_string.random.result
   end_date             = "2099-01-01T01:02:03Z"
 }
+
+resource "azurerm_role_assignment" "rbac" {
+  scope                = data.azurerm_subscription.sub.id
+  role_definition_name = "Contributor"
+  principal_id         = azuread_service_principal.sp.object_id
+}
